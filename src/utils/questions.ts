@@ -26,3 +26,15 @@ export const chooseCommand = async (): Promise<Command> => {
   });
   return answers.command;
 };
+
+export const askForNewPassword = (): Promise<string> => {
+  return inquirer
+    .prompt<{ pw: string }>([
+      {
+        type: "password",
+        name: "mainPassword",
+        message: "Enter new password",
+      },
+    ])
+    .then((answers) => answers.pw);
+};
