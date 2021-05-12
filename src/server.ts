@@ -2,8 +2,9 @@ import {
   askForMainPassword,
   chooseCommand,
   chooseService,
+  askForCredential,
 } from "./utils/questions";
-import { isMainPasswordValid } from "./utils/validation";
+import { isMainPasswordValid, isCredentialValid } from "./utils/validation";
 import { printPassword } from "./utils/message";
 
 // function start() {
@@ -25,7 +26,12 @@ const start = async () => {
       }
       break;
     case "add":
-      console.log("Add case");
+      {
+        let newCredential = await askForCredential();
+        while (!isCredentialValid(newCredential)) {
+          newCredential = await askForCredential();
+        }
+      }
       break;
   }
 };

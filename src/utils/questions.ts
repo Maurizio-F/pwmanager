@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { Command } from "../types";
+import { Command, Credential } from "../types";
 
 // export function askForMainPassword(): Promise<string> {
 export const askForMainPassword = (): Promise<string> => {
@@ -37,14 +37,23 @@ export const chooseService = async (services: string[]): Promise<string> => {
   return answers.service;
 };
 
-export const askForNewPassword = (): Promise<string> => {
-  return inquirer
-    .prompt<{ pw: string }>([
-      {
-        type: "password",
-        name: "mainPassword",
-        message: "Enter new password",
-      },
-    ])
-    .then((answers) => answers.pw);
+export const askForCredential = async (): Promise<Credential> => {
+  const answer = await inquirer.prompt<Credential>([
+    {
+      type: "input",
+      name: "service",
+      message: "Please enter service",
+    },
+    {
+      type: "input",
+      name: "username",
+      message: "Please enter username",
+    },
+    {
+      type: "password",
+      name: "password",
+      message: "Please enter password",
+    },
+  ]);
+  return answer;
 };
