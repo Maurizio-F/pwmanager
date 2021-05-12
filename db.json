@@ -1,0 +1,21 @@
+{
+  "credentials": [
+    {
+      "service": "GitHub",
+      "username": "service",
+      "password": "Please enter service"
+    },
+
+    {
+      "service": "Google",
+      "username": "service",
+      "password": "Please enter service"
+    },
+
+    {
+      "service": "Codewars",
+      "username": "service",
+      "password": "Please enter service"
+    }
+  ]
+}
