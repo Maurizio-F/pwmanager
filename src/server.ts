@@ -1,15 +1,10 @@
 import {
   askForMainPassword,
   chooseCommand,
-  askForNewPassword,
+  chooseService,
 } from "./utils/questions";
 import { isMainPasswordValid } from "./utils/validation";
-
-const pwlist = [
-  { name: "Github", password: "1234" },
-  { name: "PayPal", password: "1234" },
-  { name: "Netflix", password: "1234" },
-];
+import { printPassword } from "./utils/message";
 
 // function start() {
 const start = async () => {
@@ -24,10 +19,13 @@ const start = async () => {
   const command = await chooseCommand();
   switch (command) {
     case "list":
-      console.log(pwlist);
+      {
+        const service = await chooseService(["GitHub", "Codewars", "Google"]);
+        printPassword(service);
+      }
       break;
     case "add":
-      askForNewPassword();
+      console.log("Add case");
       break;
   }
 };
