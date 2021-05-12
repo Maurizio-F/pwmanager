@@ -11,7 +11,7 @@ import { printPassword } from "./utils/message";
 const start = async () => {
   /* Solution with while */
   let mainPassword = await askForMainPassword();
-  while (!isMainPasswordValid(mainPassword)) {
+  while (!(await isMainPasswordValid(mainPassword))) {
     console.log("Is invalid");
     mainPassword = await askForMainPassword();
   }
