@@ -2,20 +2,28 @@
   "credentials": [
     {
       "service": "GitHub",
-      "username": "service",
-      "password": "Please enter service"
+      "username": "Mauri",
+      "password": "Test "
     },
-
     {
       "service": "Google",
-      "username": "service",
-      "password": "Please enter service"
+      "username": "Mauri",
+      "password": "Test "
     },
-
     {
       "service": "Codewars",
-      "username": "service",
-      "password": "Please enter service"
+      "username": "Mauri",
+      "password": "Test "
+    },
+    {
+      "service": "Netflix",
+      "username": "hsadkhasdas",
+      "password": "5656"
+    },
+    {
+      "service": "sadasd",
+      "username": "34",
+      "password": "3sd"
     }
   ]
 }

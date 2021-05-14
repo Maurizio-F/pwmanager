@@ -2,11 +2,10 @@ import {
   askForMainPassword,
   chooseCommand,
   chooseService,
-  askForCredential,
 } from "./utils/questions";
-import { isMainPasswordValid, isCredentialValid } from "./utils/validation";
+import { isMainPasswordValid } from "./utils/validation";
 // import { printPassword } from "./utils/message";
-import { readCredentials } from "./utils/credentials";
+import { readCredentials, saveCredentials } from "./utils/credentials";
 
 // function start() {
 const start = async () => {
@@ -31,16 +30,14 @@ const start = async () => {
           (credential) => credential.service === service
         );
         console.log(selectedService);
-        // printPassword(service);
       }
       break;
     case "add":
       {
-        let newCredential = await askForCredential();
-        while (!isCredentialValid(newCredential)) {
-          newCredential = await askForCredential();
-        }
+        saveCredentials();
+        console.log("We have saved your new credential!");
       }
+
       break;
   }
 };
