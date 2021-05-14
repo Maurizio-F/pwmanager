@@ -25,6 +25,3 @@ export const saveCredentials = async (): Promise<void> => {
   await fs.writeFile("./db.json", newCredentialListJSON);
   await console.log("We have saved your new credential!");
 };
-
-// ​
-// var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase");
