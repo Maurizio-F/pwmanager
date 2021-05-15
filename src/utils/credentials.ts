@@ -16,9 +16,9 @@ export const readCredentials = async (): Promise<Credential[]> => {
 export const saveCredentials = async (): Promise<void> => {
   const credentials = await readCredentials();
   const newCredential = await askForCredential();
-  const AES = CryptoJS.AES.encrypt(newCredential.password, "test").toString();
+  const pwcr = CryptoJS.AES.encrypt(newCredential.password, "test").toString();
   console.log("Password", "test");
-  newCredential.password = AES;
+  newCredential.password = pwcr;
   credentials.push(newCredential);
   const newDB = { credentials: credentials };
   const newCredentialListJSON = JSON.stringify(newDB, null, 2);

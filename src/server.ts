@@ -6,6 +6,7 @@ import {
 import { isMainPasswordValid } from "./utils/validation";
 // import { printPassword } from "./utils/message";
 import { readCredentials, saveCredentials } from "./utils/credentials";
+import CryptoJS from "crypto-js";
 
 // function start() {
 const start = async () => {
@@ -25,17 +26,23 @@ const start = async () => {
         const credentialServices = credentials.map(
           (credential) => credential.service
         );
+
         const service = await chooseService(credentialServices);
         const selectedService = credentials.find(
           (credential) => credential.service === service
         );
-        console.log(selectedService);
+
+        if (selectedService) {
+          const pwdcr = CryptoJS.AES.decrypt(selectedService.password, "test");
+          console.log(`${selectedService.service}: 
+          Username: ${selectedService.username}
+          Password: ${pwdcr.toString(CryptoJS.enc.Utf8)}`);
+        }
       }
       break;
     case "add":
       {
         saveCredentials();
-        console.log("We have saved your new credential!");
       }
 
       break;

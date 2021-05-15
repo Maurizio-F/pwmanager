@@ -1,3 +1,14 @@
 {
-  "credentials": []
+  "credentials": [
+    {
+      "service": "fg",
+      "username": "fdg",
+      "password": "U2FsdGVkX1/a8PhLWgxKb6lNqSqCTcYDTNwCKSaas/Y="
+    },
+    {
+      "service": "Netflix",
+      "username": "Mizio",
+      "password": "U2FsdGVkX1+gaRzEXYF+IyeBI9kFegKz3pn2POrPUbs="
+    }
+  ]
 }
