@@ -13,15 +13,17 @@ export const readCredentials = async (): Promise<Credential[]> => {
   return data.credentials;
 };
 
-export const saveCredentials = async (): Promise<void> => {
+export const saveCredentials = async (password: string): Promise<void> => {
   const credentials = await readCredentials();
   const newCredential = await askForCredential();
-  const pwcr = CryptoJS.AES.encrypt(newCredential.password, "test").toString();
-  console.log("Password", "test");
-  newCredential.password = pwcr;
+  const passwordEncrypt = CryptoJS.AES.encrypt(
+    newCredential.password,
+    password
+  ).toString();
+  newCredential.password = passwordEncrypt;
   credentials.push(newCredential);
   const newDB = { credentials: credentials };
   const newCredentialListJSON = JSON.stringify(newDB, null, 2);
   await fs.writeFile("./db.json", newCredentialListJSON);
-  await console.log("We have saved your new credential!");
+  console.log("Done");
 };

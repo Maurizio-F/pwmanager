@@ -33,16 +33,20 @@ const start = async () => {
         );
 
         if (selectedService) {
-          const pwdcr = CryptoJS.AES.decrypt(selectedService.password, "test");
+          const passwordDecrypt = CryptoJS.AES.decrypt(
+            selectedService.password,
+            mainPassword
+          );
           console.log(`${selectedService.service}: 
           Username: ${selectedService.username}
-          Password: ${pwdcr.toString(CryptoJS.enc.Utf8)}`);
+          Password: ${passwordDecrypt.toString(CryptoJS.enc.Utf8)}`);
         }
       }
       break;
+
     case "add":
       {
-        saveCredentials();
+        saveCredentials(mainPassword);
       }
 
       break;
