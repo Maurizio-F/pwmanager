@@ -1,0 +1,14 @@
+{
+  "credentials": [
+    {
+      "service": "Netflix",
+      "username": "Mizio",
+      "password": "U2FsdGVkX1/GcLlOF7DJ9xHqPnMDrPS8K9xppxbbWjE="
+    },
+    {
+      "service": "Google",
+      "username": "Ssad",
+      "password": "U2FsdGVkX18e+kp8z0V5xJzzeP13BP22yLNCBAS0PRU="
+    }
+  ]
+}

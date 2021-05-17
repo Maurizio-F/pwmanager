@@ -2,10 +2,11 @@ import {
   askForMainPassword,
   chooseCommand,
   chooseService,
-  askForCredential,
 } from "./utils/questions";
-import { isMainPasswordValid, isCredentialValid } from "./utils/validation";
-import { printPassword } from "./utils/message";
+import { isMainPasswordValid } from "./utils/validation";
+// import { printPassword } from "./utils/message";
+import { readCredentials, saveCredentials } from "./utils/credentials";
+import CryptoJS from "crypto-js";
 
 // function start() {
 const start = async () => {
@@ -21,17 +22,33 @@ const start = async () => {
   switch (command) {
     case "list":
       {
-        const service = await chooseService(["GitHub", "Codewars", "Google"]);
-        printPassword(service);
-      }
-      break;
-    case "add":
-      {
-        let newCredential = await askForCredential();
-        while (!isCredentialValid(newCredential)) {
-          newCredential = await askForCredential();
+        const credentials = await readCredentials();
+        const credentialServices = credentials.map(
+          (credential) => credential.service
+        );
+
+        const service = await chooseService(credentialServices);
+        const selectedService = credentials.find(
+          (credential) => credential.service === service
+        );
+
+        if (selectedService) {
+          const passwordDecrypt = CryptoJS.AES.decrypt(
+            selectedService.password,
+            mainPassword
+          );
+          console.log(`${selectedService.service}: 
+          Username: ${selectedService.username}
+          Password: ${passwordDecrypt.toString(CryptoJS.enc.Utf8)}`);
         }
       }
+      break;
+
+    case "add":
+      {
+        saveCredentials(mainPassword);
+      }
+
       break;
   }
 };
