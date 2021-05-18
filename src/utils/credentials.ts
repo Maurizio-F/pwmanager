@@ -20,6 +20,23 @@ export const saveCredentials = async (password: string): Promise<void> => {
 export const deleteCredential = async (
   credential: Credential
 ): Promise<void> => {
-  await getCollection("credentials").deleteOne(credential);
-  console.log("Done");
+  await getCredentialsCollection().deleteOne(credential);
+  console.log("Deleted");
 };
+
+// export const selectCredential = async (): Promise<Credential> => {
+//   const credentials = await readCredentials();
+//   const credentialServices = credentials.map(
+//     (credential) => credential.service
+//   );
+
+//   const service = await chooseService(credentialServices);
+//   const selectedService = credentials.find(
+//     (credential) => credential.service === service
+//   );
+//   if (!selectedService) {
+//   throw new Error("");
+// }
+//     return selectedService;
+//
+// };

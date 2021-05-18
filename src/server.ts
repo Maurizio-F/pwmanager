@@ -66,22 +66,29 @@ const start = async () => {
 
       break;
 
-    case "delete": {
-      const credentials = await readCredentials();
-      const credentialServices = credentials.map(
-        (credential) => credential.service
-      );
-
-      const service = await chooseService(credentialServices);
-      const selectedService = credentials.find(
-        (credential) => credential.service === service
-      );
-      if (selectedService) {
-        await deleteCredential(selectedService);
+    case "delete":
+      {
+        const selectedService = await selectCredential();
+        if (selectedService) {
+          await deleteCredential(selectedService);
+        }
       }
-    }
+      break;
   }
   await disconnectDatabase();
 };
 
 start();
+
+async function selectCredential() {
+  const credentials = await readCredentials();
+  const credentialServices = credentials.map(
+    (credential) => credential.service
+  );
+
+  const service = await chooseService(credentialServices);
+  const selectedService = credentials.find(
+    (credential) => credential.service === service
+  );
+  return selectedService;
+}
