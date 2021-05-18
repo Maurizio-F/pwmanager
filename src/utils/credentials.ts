@@ -1,17 +1,10 @@
-import fs from "fs/promises";
 import type { Credential } from "../types";
 import { askForCredential } from "./questions";
 import CryptoJS from "crypto-js";
-import { getCollection } from "./database";
-
-type DB = {
-  credentials: Credential[];
-};
+import { getCollection, getCredentialsCollection } from "./database";
 
 export const readCredentials = async (): Promise<Credential[]> => {
-  const response = await fs.readFile("./db.json", "utf-8");
-  const data: DB = JSON.parse(response);
-  return data.credentials;
+  return await getCredentialsCollection().find().sort({ service: 1 }).toArray();
 };
 
 export const saveCredentials = async (password: string): Promise<void> => {
@@ -22,4 +15,11 @@ export const saveCredentials = async (password: string): Promise<void> => {
   ).toString();
   newCredential.password = passwordEncrypt;
   await getCollection("credentials").insertOne(newCredential);
+};
+
+export const deleteCredential = async (
+  credential: Credential
+): Promise<void> => {
+  await getCollection("credentials").deleteOne(credential);
+  console.log("Done");
 };

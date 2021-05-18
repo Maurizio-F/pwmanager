@@ -6,7 +6,11 @@ import {
 } from "./utils/questions";
 import { isMainPasswordValid } from "./utils/validation";
 // import { printPassword } from "./utils/message";
-import { readCredentials, saveCredentials } from "./utils/credentials";
+import {
+  deleteCredential,
+  readCredentials,
+  saveCredentials,
+} from "./utils/credentials";
 import CryptoJS from "crypto-js";
 import { connectDatabase, disconnectDatabase } from "./utils/database";
 
@@ -61,6 +65,21 @@ const start = async () => {
       }
 
       break;
+
+    case "delete": {
+      const credentials = await readCredentials();
+      const credentialServices = credentials.map(
+        (credential) => credential.service
+      );
+
+      const service = await chooseService(credentialServices);
+      const selectedService = credentials.find(
+        (credential) => credential.service === service
+      );
+      if (selectedService) {
+        await deleteCredential(selectedService);
+      }
+    }
   }
   await disconnectDatabase();
 };
