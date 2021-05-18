@@ -8,7 +8,7 @@ import { isMainPasswordValid } from "./utils/validation";
 // import { printPassword } from "./utils/message";
 import { readCredentials, saveCredentials } from "./utils/credentials";
 import CryptoJS from "crypto-js";
-import { connectDatabase } from "./utils/database";
+import { connectDatabase, disconnectDatabase } from "./utils/database";
 
 dotenv.config();
 
@@ -57,11 +57,12 @@ const start = async () => {
 
     case "add":
       {
-        saveCredentials(mainPassword);
+        await saveCredentials(mainPassword);
       }
 
       break;
   }
+  await disconnectDatabase();
 };
 
 start();
