@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import {
   askForMainPassword,
   chooseCommand,
@@ -7,9 +8,19 @@ import { isMainPasswordValid } from "./utils/validation";
 // import { printPassword } from "./utils/message";
 import { readCredentials, saveCredentials } from "./utils/credentials";
 import CryptoJS from "crypto-js";
+import { connectDatabase } from "./utils/database";
+
+dotenv.config();
 
 // function start() {
+
 const start = async () => {
+  if (process.env.MONGO_URL === undefined) {
+    throw new Error("Missing env Mongo_URL");
+  }
+
+  await connectDatabase(process.env.MONGO_URL);
+
   /* Solution with while */
   let mainPassword = await askForMainPassword();
   while (!(await isMainPasswordValid(mainPassword))) {
