@@ -62,7 +62,7 @@ const start = async () => {
       {
         const selectedService = await selectCredential();
         if (selectedService) {
-          await deleteCredential("selectCredential.service");
+          await deleteCredential(selectedService.service);
         }
       }
 
