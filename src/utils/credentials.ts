@@ -1,5 +1,5 @@
 import type { Credential } from "../types";
-import { askForCredential } from "./questions";
+import { askForCredential, chooseService } from "./questions";
 import CryptoJS from "crypto-js";
 import { getCollection, getCredentialsCollection } from "./database";
 
@@ -24,19 +24,18 @@ export const deleteCredential = async (
   console.log("Deleted");
 };
 
-// export const selectCredential = async (): Promise<Credential> => {
-//   const credentials = await readCredentials();
-//   const credentialServices = credentials.map(
-//     (credential) => credential.service
-//   );
+export const selectCredential = async (): Promise<Credential> => {
+  const credentials = await readCredentials();
+  const credentialServices = credentials.map(
+    (credential) => credential.service
+  );
 
-//   const service = await chooseService(credentialServices);
-//   const selectedService = credentials.find(
-//     (credential) => credential.service === service
-//   );
-//   if (!selectedService) {
-//   throw new Error("");
-// }
-//     return selectedService;
-//
-// };
+  const service = await chooseService(credentialServices);
+  const selectedService = credentials.find(
+    (credential) => credential.service === service
+  );
+  if (!selectedService) {
+    throw new Error("Can not find credential");
+  }
+  return selectedService;
+};

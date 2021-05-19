@@ -1,15 +1,11 @@
 import dotenv from "dotenv";
-import {
-  askForMainPassword,
-  chooseCommand,
-  chooseService,
-} from "./utils/questions";
+import { askForMainPassword, chooseCommand } from "./utils/questions";
 import { isMainPasswordValid } from "./utils/validation";
 // import { printPassword } from "./utils/message";
 import {
   deleteCredential,
-  readCredentials,
   saveCredentials,
+  selectCredential,
 } from "./utils/credentials";
 import CryptoJS from "crypto-js";
 import { connectDatabase, disconnectDatabase } from "./utils/database";
@@ -37,15 +33,7 @@ const start = async () => {
   switch (command) {
     case "list":
       {
-        const credentials = await readCredentials();
-        const credentialServices = credentials.map(
-          (credential) => credential.service
-        );
-
-        const service = await chooseService(credentialServices);
-        const selectedService = credentials.find(
-          (credential) => credential.service === service
-        );
+        const selectedService = await selectCredential();
 
         if (selectedService) {
           const passwordDecrypt = CryptoJS.AES.decrypt(
@@ -80,15 +68,15 @@ const start = async () => {
 
 start();
 
-async function selectCredential() {
-  const credentials = await readCredentials();
-  const credentialServices = credentials.map(
-    (credential) => credential.service
-  );
+// async function selectCredential() {
+//   const credentials = await readCredentials();
+//   const credentialServices = credentials.map(
+//     (credential) => credential.service
+//   );
 
-  const service = await chooseService(credentialServices);
-  const selectedService = credentials.find(
-    (credential) => credential.service === service
-  );
-  return selectedService;
-}
+//   const service = await chooseService(credentialServices);
+//   const selectedService = credentials.find(
+//     (credential) => credential.service === service
+//   );
+//   return selectedService;
+// }
