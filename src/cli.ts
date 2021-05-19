@@ -1,5 +1,9 @@
 import dotenv from "dotenv";
-import { askForMainPassword, chooseCommand } from "./utils/questions";
+import {
+  askForCredential,
+  askForMainPassword,
+  chooseCommand,
+} from "./utils/questions";
 import { isMainPasswordValid } from "./utils/validation";
 // import { printPassword } from "./utils/message";
 import {
@@ -49,7 +53,7 @@ const start = async () => {
 
     case "add":
       {
-        await saveCredentials(mainPassword);
+        await saveCredentials(await askForCredential(), mainPassword);
       }
 
       break;

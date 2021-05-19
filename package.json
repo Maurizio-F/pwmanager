@@ -4,7 +4,7 @@
   "scripts": {
     "client:dev": "vite",
     "cli:dev": "ts-node --project tsconfig.server.json src/cli",
-    "server:dev": "ts-node --project tsconfig.server.json src/server",
+    "server:dev": "tsnd --project tsconfig.server.json src/server",
     "server:build": "tsc --project tsconfig.server.json",
     "client:build": "vite build",
     "build": "npm run client:build && npm run server:build",
