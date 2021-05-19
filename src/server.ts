@@ -14,3 +14,7 @@ app.post("/api/credentials", (_request, response) => {
 app.listen(port, () => {
   console.log("pwmanager listening at http://localhost:${port}");
 });
+
+app.delete("/api/credentials", (_request, response) => {
+  response.send("All credentials request");
+});
