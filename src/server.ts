@@ -1,15 +1,26 @@
-import {
-  askForMainPassword,
-  chooseCommand,
-  chooseService,
-} from "./utils/questions";
+import dotenv from "dotenv";
+import { askForMainPassword, chooseCommand } from "./utils/questions";
 import { isMainPasswordValid } from "./utils/validation";
 // import { printPassword } from "./utils/message";
-import { readCredentials, saveCredentials } from "./utils/credentials";
+import {
+  deleteCredential,
+  saveCredentials,
+  selectCredential,
+} from "./utils/credentials";
 import CryptoJS from "crypto-js";
+import { connectDatabase, disconnectDatabase } from "./utils/database";
+
+dotenv.config();
 
 // function start() {
+
 const start = async () => {
+  if (process.env.MONGO_URL === undefined) {
+    throw new Error("Missing env Mongo_URL");
+  }
+
+  await connectDatabase(process.env.MONGO_URL);
+
   /* Solution with while */
   let mainPassword = await askForMainPassword();
   while (!(await isMainPasswordValid(mainPassword))) {
@@ -22,15 +33,7 @@ const start = async () => {
   switch (command) {
     case "list":
       {
-        const credentials = await readCredentials();
-        const credentialServices = credentials.map(
-          (credential) => credential.service
-        );
-
-        const service = await chooseService(credentialServices);
-        const selectedService = credentials.find(
-          (credential) => credential.service === service
-        );
+        const selectedService = await selectCredential();
 
         if (selectedService) {
           const passwordDecrypt = CryptoJS.AES.decrypt(
@@ -46,11 +49,34 @@ const start = async () => {
 
     case "add":
       {
-        saveCredentials(mainPassword);
+        await saveCredentials(mainPassword);
       }
 
       break;
+
+    case "delete":
+      {
+        const selectedService = await selectCredential();
+        if (selectedService) {
+          await deleteCredential(selectedService);
+        }
+      }
+      break;
   }
+  await disconnectDatabase();
 };
 
 start();
+
+// async function selectCredential() {
+//   const credentials = await readCredentials();
+//   const credentialServices = credentials.map(
+//     (credential) => credential.service
+//   );
+
+//   const service = await chooseService(credentialServices);
+//   const selectedService = credentials.find(
+//     (credential) => credential.service === service
+//   );
+//   return selectedService;
+// }
