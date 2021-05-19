@@ -62,25 +62,13 @@ const start = async () => {
       {
         const selectedService = await selectCredential();
         if (selectedService) {
-          await deleteCredential(selectedService);
+          await deleteCredential("selectCredential.service");
         }
       }
+
       break;
   }
   await disconnectDatabase();
 };
 
 start();
-
-// async function selectCredential() {
-//   const credentials = await readCredentials();
-//   const credentialServices = credentials.map(
-//     (credential) => credential.service
-//   );
-
-//   const service = await chooseService(credentialServices);
-//   const selectedService = credentials.find(
-//     (credential) => credential.service === service
-//   );
-//   return selectedService;
-// }

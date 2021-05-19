@@ -19,11 +19,21 @@ export const saveCredentials = async (
   await getCollection("credentials").insertOne(credential);
 };
 
-export const deleteCredential = async (
-  credential: Credential
-): Promise<void> => {
-  await getCredentialsCollection().deleteOne(credential);
-  console.log("Deleted");
+// export const deleteCredential = async (
+//   credential: Credential
+// ): Promise<void> => {
+//   await getCredentialsCollection().deleteOne(credential);
+//   console.log("Deleted");
+// };
+
+export const deleteCredential = async (service: string): Promise<boolean> => {
+  const result = await getCredentialsCollection().deleteOne({
+    service: service,
+  });
+  if (result.deletedCount === undefined) {
+    return false;
+  }
+  return result.deletedCount > 0;
 };
 
 export const selectCredential = async (): Promise<Credential> => {
