@@ -7,6 +7,14 @@ export const readCredentials = async (): Promise<Credential[]> => {
   return await getCredentialsCollection().find().sort({ service: 1 }).toArray();
 };
 
+export const readCredential = async (service: string): Promise<Credential> => {
+  const credential = await getCredentialsCollection().findOne({ service });
+  if (!credential) {
+    throw new Error(`Can not find credential ${service}!`);
+  }
+  return credential;
+};
+
 export const saveCredentials = async (
   credential: Credential,
   mainPassword: string
@@ -18,13 +26,6 @@ export const saveCredentials = async (
   credential.password = passwordEncrypt;
   await getCollection("credentials").insertOne(credential);
 };
-
-// export const deleteCredential = async (
-//   credential: Credential
-// ): Promise<void> => {
-//   await getCredentialsCollection().deleteOne(credential);
-//   console.log("Deleted");
-// };
 
 export const deleteCredential = async (service: string): Promise<boolean> => {
   const result = await getCredentialsCollection().deleteOne({

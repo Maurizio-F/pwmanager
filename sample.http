@@ -1,18 +1,18 @@
 ### Request all credentials
 GET http://localhost:5000/api/credentials HTTP/1.1
-Content-Type: application/json
+Accept: application/json
 
 
 ### Request a single credential
-GET http://localhost:5000/api/credentials/MyService HTTP/1.1
-Content-Type: application/json
+GET http://localhost:5000/api/credentials/Netflix HTTP/1.1
+Accept: application/json
 
 ### Add new credential
 POST http://localhost:5000/api/credentials HTTP/1.1
 Content-Type: application/json 
 
 {
-    "service": "test",
+    "service": "test1",
     "username": "max",
     "password": "supersecret"
 }
