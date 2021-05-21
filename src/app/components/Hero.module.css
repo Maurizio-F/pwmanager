@@ -1,0 +1,9 @@
+.hero {
+  background-color: lightblue;
+  padding: 1em;
+}
+
+.hero__h1 {
+  font-size: 3em;
+  margin: 0;
+}
